@@ -14,6 +14,11 @@ function App() {
     setDetails({ ...details, [e.target.name]: e.target.value });
     console.log(details)
   }
+
+  function submitForm(e){
+    e.preventDefault();
+    console.log(details)
+  }
   
   return (
     <div className="App">
@@ -23,6 +28,7 @@ function App() {
         <h4>Name</h4>
         <input 
           type="text"
+          name='name'
           value={details.name}
           onChange={handleInputText}
         ></input>
@@ -31,6 +37,7 @@ function App() {
         <h4>Email Address</h4>
         <input 
           type="text"
+          name="email"
           value={details.email}
           onChange={handleInputText}
           ></input>
@@ -39,12 +46,13 @@ function App() {
         <h4>Phone Number</h4>
         <input 
         type="text"
+        name="phone"
         value={details.phone}
         onChange={handleInputText}
         ></input>
       </div>
       <div>
-        <form>
+        <form onSubmit={submitForm}>
           <button>Submit</button>
         </form>
       </div>
