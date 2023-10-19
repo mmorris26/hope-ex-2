@@ -10,6 +10,7 @@ function App() {
     phone:''
   })
   const[error, setError] = useState('')
+  const[emailError, setEmailError] = useState('')
 
   function handleInputText(e){
     setDetails({ ...details, [e.target.name]: e.target.value });
@@ -18,27 +19,35 @@ function App() {
 
   function submitForm(e){
     e.preventDefault();
+    setEmailError('')
+    setError('')
     let missingFields = [];
-
+    if (!isValidEmail(details.email)) {
+      setEmailError("Invalid email address format");
+    }
     for (let key in details) {
       if (!details[key]) {  
         missingFields.push(key);
       }
     }
-
     if (missingFields.length > 0) {
       setError(`Please fill in the ${missingFields.join(', ')} field`);
-    } 
-
+    }
     console.log(details);
 }
   
+
+  function isValidEmail(email) {
+    const pattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    return pattern.test(email);
+  }
   return (
     <div className="App">
       <div className='form-div'>
       <h1>Please Enter Your Details</h1>
       <div>
       {error && <p style={{color: 'red'}}>{error}</p>}
+      {emailError && <p style={{color: 'red'}}>{emailError}</p>}
         <h4>Name</h4>
         <input 
           type="text"
