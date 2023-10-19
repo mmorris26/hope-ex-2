@@ -11,6 +11,7 @@ function App() {
   })
   const[error, setError] = useState('')
   const[emailError, setEmailError] = useState('')
+  const[thanksMessage, setThanksMessage] = useState(false)
 
   function handleInputText(e){
     setDetails({ ...details, [e.target.name]: e.target.value });
@@ -33,7 +34,25 @@ function App() {
     if (missingFields.length > 0) {
       setError(`Please fill in the ${missingFields.join(', ')} field`);
     }
+
+    //call mock api
+    sendDetails()
+    .then(response => response.json())
+    .then(data => {
+      setThanksMessage(true)
+      console.log('Success:', data)
+      ;
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
     console.log(details);
+    setDetails({
+      name: '',
+      email: '',
+      phone: ''
+    })
 }
   
 
@@ -41,6 +60,17 @@ function App() {
     const pattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     return pattern.test(email);
   }
+
+  function sendDetails(){
+    return fetch('my-mock-endpoint', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(details),
+    })
+  }
+
   return (
     <div className="App">
       <div className='form-div'>
@@ -48,6 +78,7 @@ function App() {
       <div>
       {error && <p style={{color: 'red'}}>{error}</p>}
       {emailError && <p style={{color: 'red'}}>{emailError}</p>}
+      {thanksMessage && <p style={{color: 'red'}}>{thanksMessage}</p>}
         <h4>Name</h4>
         <input 
           type="text"
