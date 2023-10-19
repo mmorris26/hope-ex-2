@@ -9,6 +9,7 @@ function App() {
     email: '',
     phone:''
   })
+  const[error, setError] = useState('')
 
   function handleInputText(e){
     setDetails({ ...details, [e.target.name]: e.target.value });
@@ -17,18 +18,32 @@ function App() {
 
   function submitForm(e){
     e.preventDefault();
-    console.log(details)
-  }
+    let missingFields = [];
+
+    for (let key in details) {
+      if (!details[key]) {  
+        missingFields.push(key);
+      }
+    }
+
+    if (missingFields.length > 0) {
+      setError(`Please fill in the ${missingFields.join(', ')} field`);
+    } 
+
+    console.log(details);
+}
   
   return (
     <div className="App">
       <div className='form-div'>
       <h1>Please Enter Your Details</h1>
       <div>
+      {error && <p style={{color: 'red'}}>{error}</p>}
         <h4>Name</h4>
         <input 
           type="text"
           name='name'
+          
           value={details.name}
           onChange={handleInputText}
         ></input>
@@ -38,6 +53,7 @@ function App() {
         <input 
           type="text"
           name="email"
+          
           value={details.email}
           onChange={handleInputText}
           ></input>
@@ -47,6 +63,7 @@ function App() {
         <input 
         type="text"
         name="phone"
+        
         value={details.phone}
         onChange={handleInputText}
         ></input>
