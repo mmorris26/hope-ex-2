@@ -73,12 +73,13 @@ function App() {
 
   return (
     <div className="App">
-      <div className='form-div'>
+      
       <h1>Please Enter Your Details</h1>
-      <div>
+      
       {error && <p style={{color: 'red'}}>{error}</p>}
       {emailError && <p style={{color: 'red'}}>{emailError}</p>}
       {thanksMessage && <p style={{color: 'red'}}>{thanksMessage}</p>}
+      <div className='form-div'>
         <h4>Name</h4>
         <input 
           type="text"
@@ -87,7 +88,7 @@ function App() {
           value={details.name}
           onChange={handleInputText}
         ></input>
-      </div>
+      
       <div>
         <h4>Email Address</h4>
         <input 
@@ -108,12 +109,13 @@ function App() {
         onChange={handleInputText}
         ></input>
       </div>
+      </div>
       <div>
         <form onSubmit={submitForm}>
           <button>Submit</button>
         </form>
       </div>
-      </div>
+     
     </div>
   );
 }
